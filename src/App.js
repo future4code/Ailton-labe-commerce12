@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from "react";
+import {useState, useEffect} from 'react';
 import './App.css';
+import styledComponents from "styled-components";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+    render () {
+  
+    return (
+      <div className="App">
+        <header>Hello React</header>
+        <main>
+          <section>
+            <h1>Filtros</h1>
+          </section>
+          <section>
+            <h2>Espaço dos cards</h2>
+            <div>Card1</div>
+            <div>Card2</div>
+            <div>Card3</div>
+            <div>Card4</div>
+            <div>Card5</div>
+          </section>
+          <section>
+            <h1>Espaço do carrinho</h1>
+          </section>
+        </main>
+        <footer>
+          Espaço do footer
+        </footer>
+      </div>
+    );
+    }
 }
 
 export default App;
