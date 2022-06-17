@@ -13,9 +13,9 @@ export default class ListaCarrinho extends Component {
   render() {
     return (
       <Menu>
-        <p>{this.props.quantidade}</p>
         <p>{this.props.name}</p>
-        <p>{this.props.preco}</p>
+        <p>R${this.props.preco},00</p>
+        <button>Remover</button>
       </Menu>
     )
   }

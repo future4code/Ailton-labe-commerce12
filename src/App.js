@@ -75,12 +75,9 @@ class App extends React.Component {
     valMin:'',
     valMax:'',
     filtro: 1,
-    arrayTamanho: 0,
-
-    ListaDoCarrinho: [{}]
+    ListaDoCarrinho: []
 
   }
- 
 
   updateQuery = (evento) => {
     this.setState({
@@ -115,8 +112,17 @@ class App extends React.Component {
     novaLista.push(novaProduto);
     this.setState({ListaDoCarrinho: novaLista});
   };
+    
 
     render () {     
+
+      const carrinhoSoma = this.state.ListaDoCarrinho.map((item)=>{
+        return item.preco
+      });
+      let sum = 0;
+      for (let i = 0; i < carrinhoSoma.length; i++) {
+       sum += carrinhoSoma[i];
+}
 
       const mapCarrinho = this.state.ListaDoCarrinho
       .map((produto) =>{
@@ -193,7 +199,7 @@ class App extends React.Component {
           </Filtros>
           <Central>
             <div className="alinhar-main">
-              <h4>Quantidade de produtos: {this.state.listaDeProdutos.length}</h4> 
+              <h4>Quantidade de produtos: {mapProduto.length}</h4> 
               
               <h4>Ordenação: 
                 <select 
@@ -214,7 +220,8 @@ class App extends React.Component {
           </Central>
           <Carrinho>
             <h1>Carrinho</h1>
-              {mapCarrinho}
+            <p>{mapCarrinho}</p>
+            <h4>Total das Compras: R${sum},00</h4>
           </Carrinho>
         </Main>
       </Container>
