@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import './App.css';
 import styled from 'styled-components';
 import Produto from "./Componentes/Produto";
-import JaquetaNasa from "./Componentes/Fotos/JaquetaNasa.png"
-import Espaco from "./Componentes/Fotos/Espaco.png"
-import Balao from "./Componentes/Fotos/Balao.png"
-import Lua from "./Componentes/Fotos/Lua.png"
-import Caveira from "./Componentes/Fotos/Caveira.png"
-import Fluorescente from "./Componentes/Fotos/Fluorescente.png"
-import MaisEspaco from "./Componentes/Fotos/MaisEspaco.png"
-import Astrobot from "./Componentes/Fotos/Astrobot.png"
+import JaquetaNasa from "./Componentes/Fotos/JaquetaNasa.png";
+import Espaco from "./Componentes/Fotos/Espaco.png";
+import Balao from "./Componentes/Fotos/Balao.png";
+import Lua from "./Componentes/Fotos/Lua.png";
+import Caveira from "./Componentes/Fotos/Caveira.png";
+import Fluorescente from "./Componentes/Fotos/Fluorescente.png";
+import MaisEspaco from "./Componentes/Fotos/MaisEspaco.png";
+import Astrobot from "./Componentes/Fotos/Astrobot.png";
+import ListaCarrinho from "./Componentes/ListaCarrinho";
 
 const Container = styled.div`
   display:flex;
@@ -34,6 +35,7 @@ const InputFiltros = styled.input`
 const Central = styled.div`
   display:flex;
   border-radius: 5px;
+  width: 100%;
   color: black;
   text-align: center;
   flex-direction: column;
@@ -47,6 +49,7 @@ const AreadosCards = styled.div`
 `
 const Carrinho = styled.div`
   display:flex;
+  flex-direction: column;
   width: 35%;
   background-color: lightsalmon;
   border-radius: 5px solid black;
@@ -56,6 +59,7 @@ const Carrinho = styled.div`
 `
 
 class App extends React.Component {
+  
 
   state ={
     listaDeProdutos:[
@@ -67,33 +71,86 @@ class App extends React.Component {
       {id: 6, name: "Camisa Fluorescente", preco: 150, imageUrl: Fluorescente},
       {id: 7, name: "Mais Espaço", preco: 200, imageUrl: MaisEspaco},
     ],
-    filtro: 'Crescente',
+    query: '',
+    valMin:'',
+    valMax:'',
+    filtro: 1,
+
+    ListaDoCarrinho: [{
+      id: 1, name: "Jaqueta Nasa ", preco: 1000, imageUrl: JaquetaNasa
+    }]
+
+  }
+  onClickAdd = () => {
+    // console.log ("Adicionar")
+    // const novaLista = [...this.state.ListaDoCarrinho];
+    // const novaProduto = {
+    //   nome: this.state.listaDeProdutos.name,
+    //   preco: this.state.listaDeProdutos.preco,
+    //   id:this.state.listaDeProdutos.id,
+    // };
+    // novaLista.push(novaProduto);
+    // this.setState({ ListaDoCarrinho: novaLista });
+  };
+
+  updateQuery = (evento) => {
+    this.setState({
+      query: evento.target.value
+    })
   }
 
-  onChangeFilter = (filter) => {
-    this.setState({filtro: filter})
-    console.log(this.state.filtro)
+  updateValMin = (evento) => {
+    this.setState({
+      valMin: evento.target.value
+    })
   }
 
-  filtrarPreco = (filter) => {
+  updateValMax = (evento) => {
+    this.setState({
+      valMax: evento.target.value
+    })
+  }
+
+  onChangeFilter = (evento) => {
+    this.setState({
+      filtro: evento.target.value
+    })
     
   }
 
-    render () {
+    render () {     
 
-      // const listaFiltrada = this.state.listaDeProdutos.filter((produto) => {
-      //   switch (this.state.filtro) {
-      //     case 'Crescente':
-      //       return  console.log ("Crescente")
-      //     case 'Decrescente':
-      //       return console.log ("Decrescente")
-      //       default:
-      //         return 'Crescente'
-      //   }
-      // })
-     
+      const mapCarrinho = this.state.ListaDoCarrinho
+      .map((produto) =>{
+        return (
+          <ListaCarrinho
+          key={produto.id}
+          quantidade={produto.quantidade}
+          name={produto.name}
+          preco={produto.preco}
+          />
+        )
+      })
 
-      const mapProduto = this.state.listaDeProdutos.map((produto)=>{
+      const mapProduto = this.state.listaDeProdutos
+      .filter(produto =>{
+        return produto.name.toLowerCase().includes(this.state.query.toLowerCase())
+      })
+      .filter(produto =>{
+        return this.state.valMin === '' || produto.preco >= this.state.valMin
+      })
+      .filter(produto =>{
+        return this.state.valMax === '' || produto.preco <= this.state.valMax
+      })
+      .sort((valorAtual, proxValor)=>{
+          switch (this.state.filtro){
+            case 'Crescente':
+              return valorAtual.preco - proxValor.preco
+            default:
+              return this.state.filtro * proxValor.preco - valorAtual.preco
+          }
+      })
+      .map((produto)=>{
         return (
           <Produto 
           key= {produto.id}
@@ -103,42 +160,62 @@ class App extends React.Component {
           />
         )
       })
+
   
     return (
       <Container>
         <header>
           <img src={Astrobot}></img>
           <h2><i><u>Lojinha do Astrobot</u></i></h2>
-          <p>Outras Informações</p>
+          <h1>🧑‍🚀 🚀 🌎</h1>
         </header>
         <Main>
           <Filtros>
             <h1>Filtros</h1>
             <p>Valor mínimo:</p>
-            <InputFiltros />
+            <InputFiltros 
+              type="number"
+              value={this.state.valMin}
+              onChange={this.updateValMin} 
+            />
             <p>Valor máximo:</p>
-            <InputFiltros />
+            <InputFiltros 
+              type="number"
+              value={this.state.valMax}
+              onChange={this.updateValMax} 
+            />
             <p>Busca por nome:</p>
             <InputFiltros 
-            type="text"
+              placeholder="Pesquisa"
+              value={this.state.query}
+              onChange={this.updateQuery}  
            />
+           
           </Filtros>
           <Central>
             <div className="alinhar-main">
-              <h4>Quantidade de produtos: {this.state.listaDeProdutos.length}</h4>
-              <h4>Ordenação: <select className="alinhar-input" defaultValue={this.state.filtro} onChange={(e)=>{this.onChangeFilter(e.target.value)}} >
-                <option value="Decrescente">Decrescente</option>
-                <option value="Crescente">Crescente</option>
+              <h4>Quantidade de produtos: {this.state.listaDeProdutos.length}</h4> 
+              
+              <h4>Ordenação: 
+                <select 
+                className="alinhar-input" 
+                name="order" 
+                value={this.state.filtro}
+                onChange={this.onChangeFilter} >
+                <option value={-1}>Crescente</option>
+                <option value={1}>Decrescente</option>
                 </select></h4>
             </div>
             <AreadosCards>
               <div className="alinhar-card">
                 {mapProduto}
+                
               </div>
             </AreadosCards>
           </Central>
           <Carrinho>
             <h1>Carrinho</h1>
+              {mapCarrinho}
           </Carrinho>
         </Main>
       </Container>
