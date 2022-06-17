@@ -15,7 +15,7 @@ export default class ListaCarrinho extends Component {
       <Menu>
         <p>{this.props.quantidade}</p>
         <p>{this.props.name}</p>
-        <p>R${this.props.preco},00</p>
+        <p>{this.props.preco}</p>
       </Menu>
     )
   }

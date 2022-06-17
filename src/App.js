@@ -75,23 +75,12 @@ class App extends React.Component {
     valMin:'',
     valMax:'',
     filtro: 1,
+    arrayTamanho: 0,
 
-    ListaDoCarrinho: [{
-      id: 1, name: "Jaqueta Nasa ", preco: 1000, imageUrl: JaquetaNasa
-    }]
+    ListaDoCarrinho: [{}]
 
   }
-  onClickAdd = () => {
-    // console.log ("Adicionar")
-    // const novaLista = [...this.state.ListaDoCarrinho];
-    // const novaProduto = {
-    //   nome: this.state.listaDeProdutos.name,
-    //   preco: this.state.listaDeProdutos.preco,
-    //   id:this.state.listaDeProdutos.id,
-    // };
-    // novaLista.push(novaProduto);
-    // this.setState({ ListaDoCarrinho: novaLista });
-  };
+ 
 
   updateQuery = (evento) => {
     this.setState({
@@ -117,11 +106,21 @@ class App extends React.Component {
     })
     
   }
+  onClickAdd = (name, preco) => {
+    const novaLista = [...this.state.ListaDoCarrinho];
+    const novaProduto = {
+      name: name,
+      preco: preco
+    };
+    novaLista.push(novaProduto);
+    this.setState({ListaDoCarrinho: novaLista});
+  };
 
     render () {     
 
       const mapCarrinho = this.state.ListaDoCarrinho
       .map((produto) =>{
+        console.log(produto)
         return (
           <ListaCarrinho
           key={produto.id}
@@ -157,11 +156,11 @@ class App extends React.Component {
           name={produto.name}
           imageUrl={produto.imageUrl}
           preco={produto.preco}
+          adiciona={this.onClickAdd}
           />
         )
       })
 
-  
     return (
       <Container>
         <header>
