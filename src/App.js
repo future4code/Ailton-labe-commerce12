@@ -74,7 +74,7 @@ class App extends React.Component {
     query: '',
     valMin:'',
     valMax:'',
-    filtro: 1,
+    filtro: 'Crescente',
     ListaDoCarrinho: []
 
   }
@@ -116,15 +116,13 @@ class App extends React.Component {
 
   onClickDel = (produtoID) => {
     const novaLista = this.state.ListaDoCarrinho.filter((produto) =>{
-      return produtoID === produto.id
+      return produtoID !== produto.id
     })
-    novaLista.splice (produtoID, 1)
-    console.log (novaLista)
     this.setState({ListaDoCarrinho: novaLista })
   }
     
 
-    render () {     
+    render () {    
 
       const carrinhoSoma = this.state.ListaDoCarrinho.map((item)=>{
         return item.preco
@@ -136,11 +134,10 @@ class App extends React.Component {
 
       const mapCarrinho = this.state.ListaDoCarrinho
       .map((produto) =>{
-        console.log(produto)
+        
         return (
           <ListaCarrinho
-          key={produto.id}
-          quantidade={produto.quantidade}
+          id={produto.id}
           name={produto.name}
           preco={produto.preco}
           remover={this.onClickDel}
@@ -163,13 +160,14 @@ class App extends React.Component {
             case 'Crescente':
               return valorAtual.preco - proxValor.preco
             default:
-              return this.state.filtro * proxValor.preco - valorAtual.preco
+              return proxValor.preco - valorAtual.preco
           }
       })
       .map((produto)=>{
+        
         return (
           <Produto 
-          key= {produto.id}
+          id= {produto.id}
           name={produto.name}
           imageUrl={produto.imageUrl}
           preco={produto.preco}
@@ -218,8 +216,8 @@ class App extends React.Component {
                 name="order" 
                 value={this.state.filtro}
                 onChange={this.onChangeFilter} >
-                <option value={-1}>Crescente</option>
-                <option value={1}>Decrescente</option>
+                <option value="Crescente">Crescente</option>
+                <option value="Decrescente">Decrescente</option>
                 </select></h4>
             </div>
             <AreadosCards>
