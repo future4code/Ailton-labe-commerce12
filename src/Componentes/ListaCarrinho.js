@@ -15,7 +15,7 @@ export default class ListaCarrinho extends Component {
       <Menu>
         <p>{this.props.name}</p>
         <p>R${this.props.preco},00</p>
-        <button>Remover</button>
+        <button onClick={() => this.props.remover(this.props.id)}>Remover</button>
       </Menu>
     )
   }
