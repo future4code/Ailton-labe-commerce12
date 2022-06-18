@@ -23,7 +23,7 @@ export default class Produto extends Component {
         <Imagem src={this.props.imageUrl}></Imagem>
         <p>{this.props.name}</p>
         <p>R${this.props.preco},00</p>
-        <button onClick={() => this.props.adiciona(this.props.name, this.props.preco)}>Adicionar</button>
+        <button onClick={() => this.props.adiciona(this.props.id, this.props.name, this.props.preco)}>Adicionar</button>
       </Card>
       
     )

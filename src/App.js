@@ -103,15 +103,25 @@ class App extends React.Component {
     })
     
   }
-  onClickAdd = (name, preco) => {
+  onClickAdd = (id, name, preco) => {
     const novaLista = [...this.state.ListaDoCarrinho];
     const novaProduto = {
+      id: id,
       name: name,
       preco: preco
     };
     novaLista.push(novaProduto);
     this.setState({ListaDoCarrinho: novaLista});
   };
+
+  onClickDel = (produtoID) => {
+    const novaLista = this.state.ListaDoCarrinho.filter((produto) =>{
+      return produtoID === produto.id
+    })
+    novaLista.splice (produtoID, 1)
+    console.log (novaLista)
+    this.setState({ListaDoCarrinho: novaLista })
+  }
     
 
     render () {     
@@ -133,6 +143,7 @@ class App extends React.Component {
           quantidade={produto.quantidade}
           name={produto.name}
           preco={produto.preco}
+          remover={this.onClickDel}
           />
         )
       })
