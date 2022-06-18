@@ -11,6 +11,7 @@ import Fluorescente from "./Componentes/Fotos/Fluorescente.png";
 import MaisEspaco from "./Componentes/Fotos/MaisEspaco.png";
 import Astrobot from "./Componentes/Fotos/Astrobot.png";
 import ListaCarrinho from "./Componentes/ListaCarrinho";
+import Planeta from "./Componentes/Fotos/terra.png";
 
 const Container = styled.div`
   display:flex;
@@ -120,7 +121,10 @@ class App extends React.Component {
     })
     this.setState({ListaDoCarrinho: novaLista })
   }
-    
+  
+  onClickAlert = () => {
+    return alert("Para você é tudo de graça 🥰")
+  }
 
     render () {    
 
@@ -181,7 +185,7 @@ class App extends React.Component {
         <header>
           <img src={Astrobot}></img>
           <h2><i><u>Lojinha do Astrobot</u></i></h2>
-          <h1>🧑‍🚀 🚀 🌎</h1>
+          <h1 >🧑‍🚀 🚀 🌎</h1>
         </header>
         <Main>
           <Filtros>
@@ -204,7 +208,7 @@ class App extends React.Component {
               value={this.state.query}
               onChange={this.updateQuery}  
            />
-           
+           <img className="tamanho-planeta App-logo" src={Planeta}></img>
           </Filtros>
           <Central>
             <div className="alinhar-main">
@@ -228,9 +232,10 @@ class App extends React.Component {
             </AreadosCards>
           </Central>
           <Carrinho>
-            <h1>Carrinho</h1>
+            <h1>Carrinho 🛒</h1>
             <p>{mapCarrinho}</p>
             <h4>Total das Compras: R${sum},00</h4>
+            <button className="botao-carrinho" onClick={this.onClickAlert}>🛒 Pagar</button>
           </Carrinho>
         </Main>
       </Container>
